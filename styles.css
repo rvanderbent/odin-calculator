@@ -1,0 +1,24 @@
+#wrapper {
+    display: flex;
+    justify-content: center;
+}
+#buttons {
+    display: flex;
+}
+
+#display {
+    border-style: solid;
+    border-color: black;
+    margin: 8px 0px;
+    text-align: right;
+}
+
+#operators {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 14px;
+}
