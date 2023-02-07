@@ -20,10 +20,12 @@ const OPERATOR_PLUS = "plus";
 const OPERATOR_MINUS = "minus";
 const OPERATOR_MULTIPLY = "multiply";
 const OPERATOR_DIVIDE = "divide";
+const OPERATOR_NONE = "none";
 
 const display = document.querySelector("#display");
 const negateButton = document.querySelector('#neg');
 const clearButton = document.querySelector('#clear');
+const allClearButton = document.querySelector('#allClear');
 const divideButton = document.querySelector('#' + OPERATOR_DIVIDE);
 const multiplyButton = document.querySelector('#' + OPERATOR_MULTIPLY);
 const minusButton = document.querySelector('#' + OPERATOR_MINUS);
@@ -142,7 +144,9 @@ function operate(){
             break;
     }
     value2 = 0;
-    setStringValues(value1, value2)
+    setStringValues(value1, value2);
+    operator = OPERATOR_NONE;
+    display.textContent = displayValue1;
 }
 
 function printStatus(){
@@ -159,11 +163,12 @@ function printStatus(){
 isButton.addEventListener("click", () => {
     displayStatus = DISPLAY_RESULT;
     operate();
-    display.textContent = displayValue1;
-
 });
 
 plusButton.addEventListener("click", () => {
+    if (operator !== OPERATOR_NONE){
+        operate();
+    }
     operator = OPERATOR_PLUS;
     inputDecimal = false;
     decPosition = 10;
@@ -171,6 +176,9 @@ plusButton.addEventListener("click", () => {
 });
 
 minusButton.addEventListener("click", () => {
+    if (operator !== OPERATOR_NONE){
+        operate();
+    }
     operator = OPERATOR_MINUS;
     inputDecimal = false;
     decPosition = 10;
@@ -178,6 +186,9 @@ minusButton.addEventListener("click", () => {
 });
 
 multiplyButton.addEventListener("click", () => {
+    if (operator !== OPERATOR_NONE){
+        operate();
+    }
     operator = OPERATOR_MULTIPLY;
     inputDecimal = false;
     decPosition = 10;
@@ -185,6 +196,9 @@ multiplyButton.addEventListener("click", () => {
 });
 
 divideButton.addEventListener("click", () => {
+    if (operator !== OPERATOR_NONE){
+        operate();
+    }
     operator = OPERATOR_DIVIDE;
     inputDecimal = false;
     decPosition = 10;
@@ -192,6 +206,22 @@ divideButton.addEventListener("click", () => {
 });
 
 clearButton.addEventListener("click", () => {
+    //TODO: check for decimal
+    if (displayStatus === DISPLAY_VALUE_1){
+        displayValue1 = displayValue1.substring(0, displayValue1.length -1);
+        let value1String = String(value1);
+        value1 = parseFloat(value1String.substring(0, value1String.length -1));
+        display.textContent = displayValue1;
+    }
+    else if (displayStatus === DISPLAY_VALUE_2){
+        displayValue2 = displayValue2.substring(0, displayValue2.length -1);
+        let value2String = String(value2);
+        value2 = parseFloat(value2String.substring(0, value2String.length -1));
+        display.textContent = displayValue2;
+    }
+});
+
+allClearButton.addEventListener("click", () => {
     displayValue1 = "0";
     displayValue2 = "0";
     value1 = 0;
