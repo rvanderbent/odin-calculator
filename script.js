@@ -1,8 +1,39 @@
+
+
+//⠀⠀⠀⠀⠀⠀⠀⠀⠀MADE BY RENATE⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+//⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣶⣶⣦⣄⡀⠀⠀⠀⠀⠀⠀
+//⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⣄⣀⠀⠀⠀⠀⣰⡿⠋⠁⠀⠀⠙⢿⣦⡀⠀⠀⠀⠀
+//⠀⠀⠀⠀⠀⠀⠀⣾⣿⣿⡿⢋⣤⣤⣤⣤⣈⠁⠀⠀⠀⠀⠀⠀⠛⠛⠀⠀⠀⠀
+//⠀⠀⠀⠀⠀⠀⣼⣿⣿⡿⣡⣾⣿⣿⣿⣿⣿⣿⣷⣤⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀
+//⠀⠀⠀⠀⠀⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⢸⣿⣦⡀⠀⠀⠀⠀⠀
+//⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣄⣿⣿⣿⡇⠀⠀⠀⠀⠀
+//⠀⠀⠀⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀
+//⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀
+//⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀
+//⠀⠀⠀⠀⣿⣿⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀
+//⠀⠀⠀⠀⢻⣿⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀
+//⠀⠀⠀⠀⠀⠙⠀⢻⣿⣿⣿⣿⣿⣿⡿⢻⣿⣿⡟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+//⠀⠀⠀⠀⠀⠀⠀⠀⠉⠙⠛⠿⠛⠋⠴⠿⠟⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+//⠀⠀⠀⠀
+
+const OPERATOR_PLUS = "plus";
+const OPERATOR_MINUS = "minus";
+const OPERATOR_MULTIPLY = "multiply";
+const OPERATOR_DIVIDE = "divide";
+
 const display = document.querySelector("#display");
-const plusOperator = "plus";
-const minusOperator = "minus";
-const multiplyOperator = "multiply";
-const divideOperator = "divide";
+const negateButton = document.querySelector('#neg');
+const clearButton = document.querySelector('#clear');
+const divideButton = document.querySelector('#' + OPERATOR_DIVIDE);
+const multiplyButton = document.querySelector('#' + OPERATOR_MULTIPLY);
+const minusButton = document.querySelector('#' + OPERATOR_MINUS);
+const plusButton = document.querySelector('#' + OPERATOR_PLUS);
+const isButton = document.querySelector('#is');
+
+const DISPLAY_VALUE_1 = 0;
+const DISPLAY_VALUE_2 = 1;
+const DISPLAY_RESULT = 2;
+
 
 function add(x, y){
     return x+y;
@@ -23,18 +54,19 @@ function multiply(x,y){
 
 let value1 = 0;
 let value2 = 0;
-let displayStatus = 1; //1 = input first value, 2 = input second value, 3 = output result
-let operator = ""
+let displayStatus = DISPLAY_VALUE_1;
+let operator = "";
+let negStatus = false;
 
 
 function addDigit(value){
-    if(displayStatus === 1){
-        value1 = value1*10 + value;
+    if(displayStatus === DISPLAY_VALUE_1){
+        value1 < 0 ? (value1 = value1*10 - value) : (value1 = value1*10 + value);
         display.textContent = value1;
     } 
-    else if (displayStatus === 3){
+    else if (displayStatus === DISPLAY_RESULT){
         display.textContent = value;
-        displayStatus = 1;
+        displayStatus = DISPLAY_VALUE_1;
         value1 = value;
         value2 = 0;
     }
@@ -50,67 +82,73 @@ addDigit(0);
 for(let i=0; i < 10; i++){
     let button = document.querySelector('#b'+i);
     button.addEventListener("click", () => {
-        console.log(i);
         addDigit(i);
     })
 };
 
 function operate(){
     switch(operator){
-        case plusOperator:
+        case OPERATOR_PLUS:
             value1 = add(value1, value2);
             value2 = 0;
             break;
-        case minusOperator:
+        case OPERATOR_MINUS:
             value1 = substract(value1, value2);
             value2 = 0;
             break;
-        case multiplyOperator:
+        case OPERATOR_MULTIPLY:
             value1 = multiply(value1, value2);
             value2 = 0;
             break;
-        case divideOperator:
+        case OPERATOR_DIVIDE:
             value1 = divide(value1, value2);
             value2 = 0;
             break;
     }
 }
 
-let isButton = document.querySelector('#is');
+
 isButton.addEventListener("click", () => {
-    displayStatus = 3;
+    displayStatus = DISPLAY_RESULT;
     operate();
     display.textContent = value1;
+
 });
 
-let plusButton = document.querySelector('#' + plusOperator);
 plusButton.addEventListener("click", () => {
-    operator = plusOperator;
-    displayStatus = 2;
+    operator = OPERATOR_PLUS;
+    displayStatus = DISPLAY_VALUE_2;
 });
 
-let minusButton = document.querySelector('#' + minusOperator);
 minusButton.addEventListener("click", () => {
-    operator = minusOperator;
-    displayStatus = 2;
+    operator = OPERATOR_MINUS;
+    displayStatus = DISPLAY_VALUE_2;
 });
 
-let multiplyButton = document.querySelector('#' + multiplyOperator);
 multiplyButton.addEventListener("click", () => {
-    operator = multiplyOperator;
-    displayStatus = 2;
+    operator = OPERATOR_MULTIPLY;
+    displayStatus = DISPLAY_VALUE_2;
 });
 
-let divideButton = document.querySelector('#' + divideOperator);
 divideButton.addEventListener("click", () => {
-    operator = divideOperator;
-    displayStatus = 2;
+    operator = OPERATOR_DIVIDE;
+    displayStatus = DISPLAY_VALUE_2;
 });
 
-let clearButton = document.querySelector('#clear');
 clearButton.addEventListener("click", () => {
     display.textContent = 0;
     value1 = 0;
     value2 = 0;
-    displayStatus = 1;
+    displayStatus = DISPLAY_VALUE_1;
 });
+
+negateButton.addEventListener("click", () => {
+    if (displayStatus === DISPLAY_VALUE_1 || displayStatus === DISPLAY_RESULT){
+        value1 = -value1;
+        display.textContent = value1;
+    }
+    else if (displayStatus === DISPLAY_VALUE_2){
+        value2 = -value2;
+        display.textContent = value2;
+    }
+})
