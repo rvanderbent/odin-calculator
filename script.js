@@ -23,7 +23,7 @@ function multiply(x,y){
 
 let value1 = 0;
 let value2 = 0;
-let displayStatus = 1;
+let displayStatus = 1; //1 = input first value, 2 = input second value, 3 = output result
 let operator = ""
 
 
@@ -107,5 +107,10 @@ divideButton.addEventListener("click", () => {
     displayStatus = 2;
 });
 
-
-
+let clearButton = document.querySelector('#clear');
+clearButton.addEventListener("click", () => {
+    display.textContent = 0;
+    value1 = 0;
+    value2 = 0;
+    displayStatus = 1;
+});
