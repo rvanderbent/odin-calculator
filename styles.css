@@ -33,6 +33,7 @@ button {
     width: 64px;
     height: 48px;
     margin: 2px;
+    border-radius: 6px;
 }
 
 #b0 {
@@ -44,5 +45,20 @@ button {
     border-color: #f7610ace;
     background-color: #f7610ace;
     border-radius: 12px;
-    padding: 32px;
+    padding: 24px;
+}
+
+.number {
+    background-color: #042580ce;
+    color: white;
+}
+
+#decimal {
+    background-color: #042580ce;
+    color: white;
+}
+
+.operator {
+    background-color: #3868eece;
+    color: white;
 }
