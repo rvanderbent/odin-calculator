@@ -206,17 +206,30 @@ divideButton.addEventListener("click", () => {
 });
 
 clearButton.addEventListener("click", () => {
-    //TODO: check for decimal
     if (displayStatus === DISPLAY_VALUE_1){
-        displayValue1 = displayValue1.substring(0, displayValue1.length -1);
-        let value1String = String(value1);
-        value1 = parseFloat(value1String.substring(0, value1String.length -1));
+        if (displayValue1.slice(-1) === "."){
+            inputDecimal = false;
+            decPostition = 10;
+            displayValue1 = displayValue1.substring(0, displayValue1.length -1);
+        } 
+        else {
+            displayValue1 = displayValue1.substring(0, displayValue1.length -1);
+            let value1String = String(value1);
+            value1 = parseFloat(value1String.substring(0, value1String.length -1));
+        }
         display.textContent = displayValue1;
     }
     else if (displayStatus === DISPLAY_VALUE_2){
-        displayValue2 = displayValue2.substring(0, displayValue2.length -1);
-        let value2String = String(value2);
-        value2 = parseFloat(value2String.substring(0, value2String.length -1));
+        if (displayValue2.slice(-1) === "."){
+            inputDecimal = false;
+            decPostition = 10;
+            displayValue2 = displayValue2.substring(0, displayValue2.length -1);
+        }
+        else {
+            displayValue2 = displayValue2.substring(0, displayValue2.length -1);
+            let value2String = String(value2);
+            value2 = parseFloat(value2String.substring(0, value2String.length -1));
+        }
         display.textContent = displayValue2;
     }
 });
